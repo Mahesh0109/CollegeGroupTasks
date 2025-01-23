@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Booking App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: url(https://img.freepik.com/free-vector/circles-background-dark-tones_60389-166.jpg?semt=ais_hybrid);
+        background-size: cover;
+        color: #fff;
+      }
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        color: #333;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .movie-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+      .movie-card {
+        background: #333;
+        color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+      .movie-card:hover {
+        transform: scale(1.05);
+      }
+      .movie-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      .movie-card .details {
+        padding: 10px;
+        text-align: center;
+      }
+      .movie-card .details h3 {
+        margin: 0;
+        font-size: 18px;
+      }
+      .movie-card .details p {
+        margin: 5px 0 0;
+        font-size: 16px;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      button {
+        width: 48%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s, color 0.3s;
+      }
+      #calculateButton {
+        background-color: #9fcb0c;
+        color: #fff;
+      }
+      #calculateButton:hover {
+        background-color: #97d20f;
+      }
+      #payButton {
+        background-color: #6cde86;
+        color: #fff;
+      }
+      #payButton:hover {
+        background-color: #04320e;
+      }
+      #cancelButton {
+        background-color: #9c1515;
+        color: #fff;
+      }
+      #cancelButton:hover {
+        background-color: #2b1a83;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 10px;
+        background: #e9f7ef;
+        border: 1px solid #d4edda;
+        border-radius: 5px;
+        color: #155724;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Movie Ticket Booking</h1>
+      <div class="movie-list" id="movie-list">
+        <!-- Movie Cards -->
+      </div>
+      <label for="tickets">Number of Tickets:</label>
+      <input type="number" id="tickets" placeholder="Enter number of tickets" />
+
+      <button id="calculateButton" onclick="calculatePrice()">
+        Calculate Price
+      </button>
+
+      <div id="result" class="result" style="display: none"></div>
+
+      <div id="payment-buttons" class="buttons" style="display: none">
+        <button id="payButton" onclick="payNow()">Pay</button>
+        <button id="cancelButton" onclick="cancelBooking()">Cancel</button>
+      </div>
+    </div>
+    <script>
+      const movies = [
+        {
+          name: "PUSHPHA 2- THE RULE",
+          price: 150,
+          image:
+            "https://assetscdn1.paytm.com/images/cinema/Pushpa-2-d1f0db50-a642-11ef-83c7-45b404db6ec5.jpg",
+        },
+        {
+          name: "GAME CHANGER",
+          price: 200,
+          image:
+            "https://m.media-amazon.com/images/M/MV5BYTlkM2E3MGEtYjMxMi00YzBhLTkxNmUtMmFjMjJlODMxODM1XkEyXkFqcGc@._V1_.jpg",
+        },
+        {
+          name: "DAAKU MAHARAJ",
+          price: 250,
+          image:
+            "https://cdn.gulte.com/wp-content/uploads/2024/12/Daaku-Maharaj.jpg",
+        },
+        {
+          name: "SANKRANTHIKI VASTUNAM",
+          price: 300,
+          image:
+            "https://assetscdn1.paytm.com/images/cinema/Sankranthikivas-be353f20-9b34-11ef-bc46-4b10ec9d0304.jpg",
+        },
+        {
+          name: "KANTARA",
+          price: 350,
+          image:
+            "https://img.republicworld.com/tr:w-700,q-50/rimages/Kantara-a-legend-1702891120258.webp",
+        },
+        {
+          name: "ACQUAMAN - 2",
+          price: 400,
+          image:
+            "https://upload.wikimedia.org/wikipedia/en/4/4a/Aquaman_and_the_Lost_Kingdom_poster.jpg",
+        },
+        {
+          name: "MEG - 2",
+          price: 450,
+          image:
+            "https://m.media-amazon.com/images/M/MV5BOGNiOTFkYTUtMDdiMi00YmJlLTkzOTAtMGViYWRhZjY3ODhkXkEyXkFqcGc@._V1_.jpg",
+        },
+        {
+          name: "THOR",
+          price: 400,
+          image:
+            "https://m.media-amazon.com/images/M/MV5BNjRhNGZjZjEtYTQzYS00OWUxLThjNGEtMTIwMTE2ZDFlZTZkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        },
+      ];
+
+      let selectedMovie = null;
+
+      const movieList = document.getElementById("movie-list");
+
+      movies.forEach((movie, index) => {
+        const movieCard = document.createElement("div");
+        movieCard.classList.add("movie-card");
+        movieCard.innerHTML = `
+          <img src="${movie.image}" alt="${movie.name}" />
+          <div class="details">
+            <h3>${movie.name}</h3>
+            <p>₹${movie.price}</p>
+          </div>
+        `;
+        movieCard.onclick = () => selectMovie(index);
+        movieList.appendChild(movieCard);
+      });
+
+      function selectMovie(index) {
+        selectedMovie = movies[index];
+        document
+          .querySelectorAll(".movie-card")
+          .forEach((card) => card.classList.remove("selected"));
+        movieList.children[index].classList.add("selected");
+      }
+
+      function calculatePrice() {
+        if (!selectedMovie) {
+          alert("Please select a movie.");
+          return;
+        }
+
+        const tickets = parseInt(document.getElementById("tickets").value);
+        if (!tickets || tickets <= 0) {
+          alert("Please enter a valid number of tickets.");
+          return;
+        }
+
+        let totalPrice = selectedMovie.price * tickets;
+        let discount = 0;
+
+        if (tickets > 3) {
+          discount = totalPrice * 0.1;
+          totalPrice -= discount;
+        }
+
+        const resultDiv = document.getElementById("result");
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `
+          <p><strong>Movie:</strong> ${selectedMovie.name}</p>
+          <p>Total Price: ₹${(selectedMovie.price * tickets).toFixed(2)}</p>
+          <p>Discount: ₹${discount.toFixed(2)}</p>
+          <p>Final Price: ₹${totalPrice.toFixed(2)}</p>
+        `;
+
+        document.getElementById("payment-buttons").style.display = "flex";
+      }
+
+      function payNow() {
+        alert("Payment successful! Enjoy your movie!");
+        resetForm();
+      }
+
+      function cancelBooking() {
+        alert("Booking cancelled.");
+        resetForm();
+      }
+
+      function resetForm() {
+        selectedMovie = null;
+        document.querySelectorAll(".movie-card").forEach((card) => {
+          card.classList.remove("selected");
+        });
+        document.getElementById("tickets").value = "";
+        document.getElementById("result").style.display = "none";
+        document.getElementById("payment-buttons").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
