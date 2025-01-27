@@ -149,6 +149,64 @@
       .cart-actions .remove:hover {
         background-color: #dc4225;
       }
+      @media screen and (max-width: 768px) {
+  .product {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .product img {
+    width: 100%;
+    height: auto;
+    margin: 0 auto 20px;
+  }
+
+  .product-details {
+    text-align: center;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cart-item img {
+    margin-bottom: 10px;
+  }
+
+  .cart-item-details {
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+  }
+
+  .cart-item-title,
+  .cart-item-quantity,
+  .cart-item-price {
+    margin: 5px 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .product-details button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .cart-actions button {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+}
+
     </style>
   </head>
   <body>
