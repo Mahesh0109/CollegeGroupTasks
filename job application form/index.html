@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+
+        color: black;
+
+        z-index: -1;
+
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 3em;
+        margin-top: 20px;
+        color: #fff;
+        text-shadow: 2px 2px 5px #000;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 800px;
+        margin: 30px auto;
+        background-color: lightblue;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+      }
+
+      .header {
+        color: white;
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .form-section {
+        padding: 20px;
+        border-bottom: 2px solid #ccc;
+      }
+
+      label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+      }
+
+      .mandatory::after {
+        content: " *";
+        color: red;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+      }
+
+      input[type="submit"] {
+        background: linear-gradient(135deg, #ff6a00, #ffcc00);
+        color: white;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: 0.3s;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+      }
+
+      input[type="submit"]:hover {
+        background: linear-gradient(135deg, #ffcc00, #ff6a00);
+      }
+
+      .thank-you {
+        font-size: 2.5em;
+        margin-top: 20px;
+        color: #333;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+        text-shadow: 2px 2px 5px #000;
+      }
+
+      img {
+        width: 200px;
+        margin-top: 20px;
+      }
+
+      .view-table {
+        width: 80%;
+        margin: 30px auto;
+        border-collapse: collapse;
+      }
+
+      .view-table th,
+      .view-table td {
+        padding: 15px;
+        border: 4px solid black;
+        text-align: left;
+      }
+
+      .hidden {
+        display: none;
+      }
+      h1,
+      h2,
+      h3 {
+        color: black;
+        text-shadow: 2px 2px 5px #000;
+      }
+
+      .bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <video class="bg-video" autoplay muted loop>
+      <source
+        src="https://www.shutterstock.com/shutterstock/videos/1037665844/preview/stock-footage-trendy-video-background-d-render-texture-with-circle-parts-rotation-spiral-surface-concept.webm"
+        type="video/mp4"
+      />
+      Your browser does not support HTML5 video.
+    </video>
+
+    <h1>Apply for Your Dream Job!</h1>
+
+    <div class="container" id="formContainer">
+      <div class="header">
+        <h2>Job Application Form</h2>
+      </div>
+      <form id="jobForm" onsubmit="showPreview(event)">
+        <div class="form-section">
+          <label for="fullName" class="mandatory">Full Name</label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            placeholder="Enter your full name"
+            required
+          />
+
+          <label for="email" class="mandatory">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+
+          <label for="phone" class="mandatory">Phone Number (10 digits)</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Enter your phone number"
+            required
+            pattern="^\d{10}$"
+            title="Phone number must be 10 digits"
+          />
+
+          <label for="dob" class="mandatory">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required />
+
+          <label for="gender" class="mandatory">Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+
+          <h2>EDUCATION DETAILS</h2>
+          <label for="highschool" class="mandatory">High School Name</label>
+          <input
+            type="text"
+            id="highschool"
+            name="highschool"
+            placeholder="Enter high school name"
+            required
+          />
+
+          <label for="college" class="mandatory">College Name</label>
+          <input
+            type="text"
+            id="college"
+            name="college"
+            placeholder="Enter college name"
+            required
+          />
+
+          <label for="degree" class="mandatory">Degree</label>
+          <input
+            type="text"
+            id="degree"
+            name="degree"
+            placeholder="Enter your degree"
+            required
+          />
+
+          <label for="specialization" class="mandatory">Specialization</label>
+          <input
+            type="text"
+            id="specialization"
+            name="specialization"
+            placeholder="Enter your specialization"
+            required
+          />
+
+          <label for="experience" class="mandatory"
+            >Work Experience (in years)</label
+          >
+          <input
+            type="number"
+            id="experience"
+            name="experience"
+            placeholder="Enter years of experience"
+            required
+          />
+
+          <h3>SKILLS</h3>
+          <label for="skills" class="mandatory">Key Skills</label>
+          <textarea
+            id="skills"
+            name="skills"
+            rows="3"
+            placeholder="List your skills"
+            required
+          ></textarea>
+
+          <label for="position" class="mandatory">Position Applied For</label>
+          <input
+            type="text"
+            id="position"
+            name="position"
+            placeholder="Enter the position"
+            required
+          />
+          <label for="resume">Resume:</label>
+          <input type="file" id="resume" name="resume" required />
+          <label for="coverLetter">Cover Letter:</label>
+          <textarea
+            id="coverLetter"
+            name="coverLetter"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+
+        <input type="submit" value="Submit Application" />
+      </form>
+    </div>
+
+    <div class="container hidden" id="viewContainer">
+      <div class="header">
+        <h2>Application view</h2>
+      </div>
+
+      <table class="view-table" border="4">
+        <tr>
+          <th>Full Name</th>
+          <td id="viewFullName"></td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td id="viewEmail"></td>
+        </tr>
+        <tr>
+          <th>Phone</th>
+          <td id="viewPhone"></td>
+        </tr>
+        <tr>
+          <th>Date of Birth</th>
+          <td id="viewDob"></td>
+        </tr>
+        <tr>
+          <th>Gender</th>
+          <td id="viewGender"></td>
+        </tr>
+
+        <tr>
+          <th>High School</th>
+          <td id="viewHighSchool"></td>
+        </tr>
+        <tr>
+          <th>College</th>
+          <td id="viewCollege"></td>
+        </tr>
+        <tr>
+          <th>Degree</th>
+          <td id="viewDegree"></td>
+        </tr>
+        <tr>
+          <th>Specialization</th>
+          <td id="viewSpecialization"></td>
+        </tr>
+        <tr>
+          <th>Experience</th>
+          <td id="viewExperience"></td>
+        </tr>
+        <tr>
+          <th>Skills</th>
+          <td id="viewSkills"></td>
+        </tr>
+        <tr>
+          <th>Position</th>
+          <td id="viewPosition"></td>
+        </tr>
+
+        <tr>
+          <th>coverLetter</th>
+          <td id="viewcoverLetter"></td>
+        </tr>
+      </table>
+      <div class="thank-you">
+        <p>Thank you for submitting your application</p>
+        <img
+          src="https://img.icons8.com/?size=100&id=xGziQWK1UeYf&format=png&color=000000"
+          alt="Thank You"
+        />
+      </div>
+    </div>
+
+    <script>
+      function showPreview(event) {
+        event.preventDefault();
+        document.getElementById("formContainer").style.display = "none";
+        document.getElementById("viewContainer").style.display = "block";
+        document.getElementById("viewFullName").textContent =
+          document.getElementById("fullName").value;
+        document.getElementById("viewEmail").textContent =
+          document.getElementById("email").value;
+        document.getElementById("viewPhone").textContent =
+          document.getElementById("phone").value;
+        document.getElementById("viewDob").textContent =
+          document.getElementById("dob").value;
+        document.getElementById("viewGender").textContent =
+          document.getElementById("gender").value;
+        document.getElementById("viewHighSchool").textContent =
+          document.getElementById("highschool").value;
+        document.getElementById("viewCollege").textContent =
+          document.getElementById("college").value;
+        document.getElementById("viewDegree").textContent =
+          document.getElementById("degree").value;
+        document.getElementById("viewSpecialization").textContent =
+          document.getElementById("specialization").value;
+        document.getElementById("viewExperience").textContent =
+          document.getElementById("experience").value;
+        document.getElementById("viewSkills").textContent =
+          document.getElementById("skills").value;
+        document.getElementById("viewPosition").textContent =
+          document.getElementById("position").value;
+        document.getElementById("viewcoverLetter").textContent =
+          document.getElementById("coverLetter").value;
+      }
+    </script>
+  </body>
+</html>
